@@ -3,7 +3,7 @@
     color: #fff;
     display: flex;
     padding: 0.7rem 2rem;
-    width: 100%;
+    width: 100vw;
     margin-bottom: 1rem;
     background-color: teal;
   }

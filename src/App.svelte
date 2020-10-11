@@ -1,30 +1,19 @@
 <script>
   import Header from './Header.svelte';
+
+  const add = (input) => console.log(input.value);
 </script>
 
 <style>
-  main {
-    text-align: center;
-    padding: 1em;
-    max-width: 240px;
-    margin: 0 auto;
-  }
-
-  h1 {
-    color: #ff3e00;
-    text-transform: uppercase;
-    font-size: 4em;
-    font-weight: 100;
-  }
-
-  @media (min-width: 640px) {
-    main {
-      max-width: none;
-    }
+  .task {
+    font-size: 1.4em;
+    margin: 2em 0 1em 2rem;
+    min-width: 50vw;
   }
 </style>
 
 <Header />
-<main>
-  <h1>Kanban board</h1>
-</main>
+<input
+  class="task"
+  placeholder="What task needs to be done?"
+  on:keydown={(e) => e.key === 'Enter' && add(e.target)} />
