@@ -1,4 +1,5 @@
 <script>
+  import Navbar from './Navbar.svelte';
 </script>
 
 <style>
@@ -23,6 +24,7 @@
   }
 </style>
 
+<Navbar />
 <main>
   <h1>Kanban board</h1>
 </main>
