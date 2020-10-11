@@ -1,5 +1,5 @@
 <script>
-  import Navbar from './Navbar.svelte';
+  import Header from './Header.svelte';
 </script>
 
 <style>
@@ -24,7 +24,7 @@
   }
 </style>
 
-<Navbar />
+<Header />
 <main>
   <h1>Kanban board</h1>
 </main>
