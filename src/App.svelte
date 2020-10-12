@@ -5,9 +5,10 @@
   import Header from './Header.svelte';
   import { dummyData } from './dummy-data';
 
-  const tasks = [...dummyData];
+  let tasks = [...dummyData];
+
   const [send, receive] = crossfade({
-    fallback(node, params) {
+    fallback(node, _params) {
       const style = getComputedStyle(node);
       const transform = style.transform === 'none' ? '' : style.transform;
 
@@ -41,22 +42,6 @@
 </script>
 
 <style>
-  .task {
-    font-size: 1.4em;
-    margin: 2em auto;
-    min-width: 50vw;
-  }
-
-  .todo,
-  .in-progress,
-  .review,
-  .done {
-    float: left;
-    width: 25%;
-    padding: 0 1em 0 0;
-    box-sizing: border-box;
-  }
-
   h2 {
     font-size: 2em;
     font-weight: 200;
@@ -80,27 +65,6 @@
     margin: 0;
   }
 
-  .input-field {
-    width: 100%;
-    display: flex;
-    justify-content: center;
-  }
-
-  .todo label {
-    background-color: #f2f2f0;
-  }
-  .in-progress label {
-    background-color: #ffbc47;
-  }
-  .review label {
-    background-color: #f65e5d;
-    color: #fff;
-  }
-  .done label {
-    background-color: #40cee2;
-    color: #fff;
-  }
-
   button {
     float: right;
     height: 1em;
@@ -118,9 +82,46 @@
     opacity: 1;
   }
 
+  .task {
+    font-size: 1.4em;
+    margin: 2em auto;
+    min-width: 50vw;
+  }
+
+  .todo,
+  .in-progress,
+  .review,
+  .done {
+    float: left;
+    width: 25%;
+    padding: 0 1em 0 0;
+    box-sizing: border-box;
+  }
+
+  .input-field {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
   .board {
     width: 90%;
     margin: 0 auto;
+  }
+
+  .todo label {
+    background-color: #f2f2f0;
+  }
+  .in-progress label {
+    background-color: #ffbc47;
+  }
+  .review label {
+    background-color: #f65e5d;
+    color: #fff;
+  }
+  .done label {
+    background-color: #40cee2;
+    color: #fff;
   }
 </style>
 
