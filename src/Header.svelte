@@ -5,7 +5,7 @@
     padding: 0.7rem 2rem;
     width: 100vw;
     margin-bottom: 1rem;
-    background-color: teal;
+    background-color: #1d2d60;
   }
 </style>
 

@@ -21,8 +21,8 @@
   });
 
   let tasks = [
-    { id: 1, status: 'todo', description: 'Write some docs' },
-    { id: 2, status: 'review', description: 'Learn SQL' },
+    { id: 1, status: 'done', description: 'Consult the docs' },
+    { id: 2, status: 'done', description: 'Learn SQL' },
     {
       id: 3,
       status: 'in-progress',
@@ -30,8 +30,10 @@
       description: 'Study TypeScript',
     },
     { id: 4, status: 'todo', description: 'Daily stand-up' },
-    { id: 5, status: 'done', description: 'Read MDN' },
-    { id: 6, status: 'done', description: 'Fix bugs' },
+    { id: 5, status: 'todo', description: 'Read MDN' },
+    { id: 6, status: 'review', description: 'Fix bugs' },
+    { id: 7, status: 'todo', description: 'Learn Sass' },
+    { id: 8, status: 'in-progress', description: 'Make Svelte app' },
   ];
 
   let uid = tasks.length + 1;
@@ -98,8 +100,18 @@
     justify-content: center;
   }
 
+  .todo label {
+    background-color: #f2f2f0;
+  }
+  .in-progress label {
+    background-color: #ffbc47;
+  }
+  .review label {
+    background-color: #f65e5d;
+    color: #fff;
+  }
   .done label {
-    background-color: rgb(238, 24, 167);
+    background-color: #40cee2;
     color: #fff;
   }
 
@@ -119,6 +131,11 @@
   label:hover button {
     opacity: 1;
   }
+
+  .board {
+    width: 90%;
+    margin: 0 auto;
+  }
 </style>
 
 <Header />
@@ -129,58 +146,62 @@
     on:keydown={(e) => e.key === 'Enter' && add(e.target)} />
 </div>
 
-<div class="todo">
-  <h2>todo</h2>
-  {#each tasks.filter((t) => t.status === 'todo') as task (task.id)}
-    <label
-      in:receive={{ key: task.id }}
-      out:send={{ key: task.id }}
-      animate:flip>
-      <input type="checkbox" on:change={() => (task.status = 'in-progress')} />
-      {task.description}
-      <button on:click={() => remove(task)}>x</button>
-    </label>
-  {/each}
-</div>
+<div class="board">
+  <div class="todo">
+    <h2>todo</h2>
+    {#each tasks.filter((t) => t.status === 'todo') as task (task.id)}
+      <label
+        in:receive={{ key: task.id }}
+        out:send={{ key: task.id }}
+        animate:flip>
+        <input
+          type="checkbox"
+          on:change={() => (task.status = 'in-progress')} />
+        {task.description}
+        <button on:click={() => remove(task)}>x</button>
+      </label>
+    {/each}
+  </div>
 
-<div class="in-progress">
-  <h2>in progress</h2>
-  {#each tasks.filter((t) => t.status === 'in-progress') as task (task.id)}
-    <label
-      in:receive={{ key: task.id }}
-      out:send={{ key: task.id }}
-      animate:flip>
-      <input type="checkbox" on:change={() => (task.status = 'review')} />
-      {task.description}
-      <button on:click={() => remove(task)}>x</button>
-    </label>
-  {/each}
-</div>
+  <div class="in-progress">
+    <h2>in progress</h2>
+    {#each tasks.filter((t) => t.status === 'in-progress') as task (task.id)}
+      <label
+        in:receive={{ key: task.id }}
+        out:send={{ key: task.id }}
+        animate:flip>
+        <input type="checkbox" on:change={() => (task.status = 'review')} />
+        {task.description}
+        <button on:click={() => remove(task)}>x</button>
+      </label>
+    {/each}
+  </div>
 
-<div class="review">
-  <h2>review</h2>
-  {#each tasks.filter((t) => t.status === 'review') as task (task.id)}
-    <label
-      in:receive={{ key: task.id }}
-      out:send={{ key: task.id }}
-      animate:flip>
-      <input type="checkbox" on:change={() => (task.status = 'done')} />
-      {task.description}
-      <button on:click={() => remove(task)}>x</button>
-    </label>
-  {/each}
-</div>
+  <div class="review">
+    <h2>review</h2>
+    {#each tasks.filter((t) => t.status === 'review') as task (task.id)}
+      <label
+        in:receive={{ key: task.id }}
+        out:send={{ key: task.id }}
+        animate:flip>
+        <input type="checkbox" on:change={() => (task.status = 'done')} />
+        {task.description}
+        <button on:click={() => remove(task)}>x</button>
+      </label>
+    {/each}
+  </div>
 
-<div class="done">
-  <h2>done</h2>
-  {#each tasks.filter((t) => t.status === 'done') as task (task.id)}
-    <label
-      in:receive={{ key: task.id }}
-      out:send={{ key: task.id }}
-      animate:flip>
-      <input type="checkbox" bind:checked={task.status} />
-      {task.description}
-      <button on:click={() => remove(task)}>x</button>
-    </label>
-  {/each}
+  <div class="done">
+    <h2>done</h2>
+    {#each tasks.filter((t) => t.status === 'done') as task (task.id)}
+      <label
+        in:receive={{ key: task.id }}
+        out:send={{ key: task.id }}
+        animate:flip>
+        <input type="checkbox" bind:checked={task.status} />
+        {task.description}
+        <button on:click={() => remove(task)}>x</button>
+      </label>
+    {/each}
+  </div>
 </div>
