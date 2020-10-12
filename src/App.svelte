@@ -21,17 +21,17 @@
   });
 
   let tasks = [
-    { id: 1, status: 'todo', done: false, description: 'Write some docs' },
-    { id: 2, status: 'revie', done: false, description: 'Learn SQL' },
+    { id: 1, status: 'todo', description: 'Write some docs' },
+    { id: 2, status: 'review', description: 'Learn SQL' },
     {
       id: 3,
       status: 'in-progress',
       done: true,
       description: 'Study TypeScript',
     },
-    { id: 4, status: 'todo', done: false, description: 'Daily stand-up' },
-    { id: 5, status: 'done', done: false, description: 'Read MDN' },
-    { id: 6, status: 'done', done: false, description: 'Fix bugs' },
+    { id: 4, status: 'todo', description: 'Daily stand-up' },
+    { id: 5, status: 'done', description: 'Read MDN' },
+    { id: 6, status: 'done', description: 'Fix bugs' },
   ];
 
   let uid = tasks.length + 1;
@@ -131,12 +131,12 @@
 
 <div class="todo">
   <h2>todo</h2>
-  {#each tasks.filter((t) => !t.done) as task (task.id)}
+  {#each tasks.filter((t) => t.status === 'todo') as task (task.id)}
     <label
       in:receive={{ key: task.id }}
       out:send={{ key: task.id }}
       animate:flip>
-      <input type="checkbox" bind:checked={task.done} />
+      <input type="checkbox" on:change={() => (task.status = 'in-progress')} />
       {task.description}
       <button on:click={() => remove(task)}>x</button>
     </label>
@@ -145,19 +145,40 @@
 
 <div class="in-progress">
   <h2>in progress</h2>
-</div>
-<div class="review">
-  <h2>review</h2>
-</div>
-
-<div class="done">
-  <h2>done</h2>
-  {#each tasks.filter((t) => t.done) as task (task.id)}
+  {#each tasks.filter((t) => t.status === 'in-progress') as task (task.id)}
     <label
       in:receive={{ key: task.id }}
       out:send={{ key: task.id }}
       animate:flip>
-      <input type="checkbox" bind:checked={task.done} />
+      <input type="checkbox" on:change={() => (task.status = 'review')} />
+      {task.description}
+      <button on:click={() => remove(task)}>x</button>
+    </label>
+  {/each}
+</div>
+
+<div class="review">
+  <h2>review</h2>
+  {#each tasks.filter((t) => t.status === 'review') as task (task.id)}
+    <label
+      in:receive={{ key: task.id }}
+      out:send={{ key: task.id }}
+      animate:flip>
+      <input type="checkbox" on:change={() => (task.status = 'done')} />
+      {task.description}
+      <button on:click={() => remove(task)}>x</button>
+    </label>
+  {/each}
+</div>
+
+<div class="done">
+  <h2>done</h2>
+  {#each tasks.filter((t) => t.status === 'done') as task (task.id)}
+    <label
+      in:receive={{ key: task.id }}
+      out:send={{ key: task.id }}
+      animate:flip>
+      <input type="checkbox" bind:checked={task.status} />
       {task.description}
       <button on:click={() => remove(task)}>x</button>
     </label>
