@@ -21,12 +21,17 @@
   });
 
   let tasks = [
-    { id: 1, done: false, description: 'Write some docs' },
-    { id: 2, done: false, description: 'Learn SQL' },
-    { id: 3, done: true, description: 'Study TypeScript' },
-    { id: 4, done: false, description: 'Daily stand-up' },
-    { id: 5, done: false, description: 'Read MDN' },
-    { id: 6, done: false, description: 'Fix bugs' },
+    { id: 1, status: 'todo', done: false, description: 'Write some docs' },
+    { id: 2, status: 'revie', done: false, description: 'Learn SQL' },
+    {
+      id: 3,
+      status: 'in-progress',
+      done: true,
+      description: 'Study TypeScript',
+    },
+    { id: 4, status: 'todo', done: false, description: 'Daily stand-up' },
+    { id: 5, status: 'done', done: false, description: 'Read MDN' },
+    { id: 6, status: 'done', done: false, description: 'Fix bugs' },
   ];
 
   let uid = tasks.length + 1;
@@ -34,7 +39,7 @@
   const add = (input) => {
     const task = {
       id: uid++,
-      done: false,
+      status: 'todo',
       description: input.value,
     };
 
@@ -50,14 +55,16 @@
 <style>
   .task {
     font-size: 1.4em;
-    margin: 2em 0 1em 2rem;
+    margin: 2em auto;
     min-width: 50vw;
   }
 
-  .left,
-  .right {
+  .todo,
+  .in-progress,
+  .review,
+  .done {
     float: left;
-    width: 50%;
+    width: 25%;
     padding: 0 1em 0 0;
     box-sizing: border-box;
   }
@@ -85,7 +92,13 @@
     margin: 0;
   }
 
-  .right label {
+  .input-field {
+    width: 100%;
+    display: flex;
+    justify-content: center;
+  }
+
+  .done label {
     background-color: rgb(238, 24, 167);
     color: #fff;
   }
@@ -109,12 +122,14 @@
 </style>
 
 <Header />
-<input
-  class="task"
-  placeholder="What task needs to be done?"
-  on:keydown={(e) => e.key === 'Enter' && add(e.target)} />
+<div class="input-field">
+  <input
+    class="task"
+    placeholder="What task needs to be done?"
+    on:keydown={(e) => e.key === 'Enter' && add(e.target)} />
+</div>
 
-<div class="left">
+<div class="todo">
   <h2>todo</h2>
   {#each tasks.filter((t) => !t.done) as task (task.id)}
     <label
@@ -128,7 +143,14 @@
   {/each}
 </div>
 
-<div class="right">
+<div class="in-progress">
+  <h2>in progress</h2>
+</div>
+<div class="review">
+  <h2>review</h2>
+</div>
+
+<div class="done">
   <h2>done</h2>
   {#each tasks.filter((t) => t.done) as task (task.id)}
     <label
