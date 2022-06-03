@@ -3,6 +3,7 @@
   import { crossfade } from 'svelte/transition';
   import { flip } from 'svelte/animate';
   import Header from './Header.svelte';
+  import NewTodo from './NewTodo.svelte'
   import { dummyData } from './dummy-data';
 
   let tasks = [...dummyData];
@@ -25,15 +26,14 @@
 
   let uid = tasks.length + 1;
 
-  const add = (input) => {
+  const add = (event) => {
     const task = {
       id: uid++,
       status: 'todo',
-      description: input.value,
+      description: event.detail.text,
     };
 
     tasks = [task, ...tasks];
-    input.value = '';
   };
 
   const remove = (task) => {
@@ -61,10 +61,6 @@
     user-select: none;
   }
 
-  input {
-    margin: 0;
-  }
-
   button {
     float: right;
     height: 1em;
@@ -82,12 +78,6 @@
     opacity: 1;
   }
 
-  .task {
-    font-size: 1.4em;
-    margin: 2em auto;
-    min-width: 50vw;
-  }
-
   .todo,
   .in-progress,
   .review,
@@ -96,12 +86,6 @@
     width: 25%;
     padding: 0 1em 0 0;
     box-sizing: border-box;
-  }
-
-  .input-field {
-    width: 100%;
-    display: flex;
-    justify-content: center;
   }
 
   .board {
@@ -126,13 +110,7 @@
 </style>
 
 <Header />
-<div class="input-field">
-  <input
-    class="task"
-    placeholder="What task needs to be done?"
-    on:keydown={(e) => e.key === 'Enter' && add(e.target)} />
-</div>
-
+<NewTodo on:addTodo={add}/>
 <div class="board">
   <div class="todo">
     <h2>todo</h2>
