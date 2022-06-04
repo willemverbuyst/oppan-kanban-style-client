@@ -5,6 +5,7 @@
   import Header from './Header.svelte';
   import NewTodoInput from './NewTodoInput.svelte'
   import TaskInProgress from './TaskInProgress.svelte';
+  import TaskReview from './TaskReview.svelte'
   import TaskTodo from './TaskTodo.svelte';
   import { dummyData } from './dummy-data';
 
@@ -80,8 +81,6 @@
     opacity: 1;
   }
 
-  
-  .review,
   .done {
     float: left;
     width: 25%;
@@ -94,11 +93,6 @@
     margin: 0 auto;
   }
 
-  
-  .review label {
-    background-color: #f65e5d;
-    color: #fff;
-  }
   .done label {
     background-color: #40cee2;
     color: #fff;
@@ -110,23 +104,7 @@
 <div class="board">
   <TaskTodo bind:tasks={tasks} on:removeTask={remove}/>
   <TaskInProgress bind:tasks={tasks} on:removeTask={remove}/>
-
-
-  
-
-  <div class="review">
-    <h2>review</h2>
-    {#each tasks.filter((t) => t.status === 'review') as task (task.id)}
-      <label
-        in:receive={{ key: task.id }}
-        out:send={{ key: task.id }}
-        animate:flip>
-        <input type="checkbox" on:change={() => (task.status = 'done')} />
-        {task.description}
-        <button on:click={() => remove(task)}>x</button>
-      </label>
-    {/each}
-  </div>
+  <TaskReview bind:tasks={tasks} on:removeTask={remove}/>
 
   <div class="done">
     <h2>done</h2>
