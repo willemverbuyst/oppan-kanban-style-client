@@ -5,9 +5,9 @@
   import TaskInProgress from './TaskInProgress.svelte';
   import TaskReview from './TaskReview.svelte'
   import TaskTodo from './TaskTodo.svelte';
-  import { dummyData } from '../data/dummy-data';
+  import dummyData from '../data/dummy-data.json';
 
-  let tasks = [...dummyData];
+  let tasks = dummyData
   let uid = tasks.length + 1;
 
   function add(event) {
