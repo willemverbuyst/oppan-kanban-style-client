@@ -5,7 +5,7 @@
   import TaskInProgress from './TaskInProgress.svelte';
   import TaskReview from './TaskReview.svelte'
   import TaskTodo from './TaskTodo.svelte';
-  import { dummyData } from './dummy-data';
+  import { dummyData } from '../data/dummy-data';
 
   let tasks = [...dummyData];
   let uid = tasks.length + 1;
