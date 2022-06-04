@@ -14,6 +14,12 @@ body {
     Oxygen-Sans, Ubuntu, Cantarell, 'Helvetica Neue', sans-serif;
 }
 
+h2 {
+  font-size: 2em;
+  font-weight: 200;
+  user-select: none;
+}
+
 a {
   color: rgb(0, 100, 200);
   text-decoration: none;
@@ -28,7 +34,16 @@ a:visited {
 }
 
 label {
+  top: 0;
+  left: 0;
   display: block;
+  font-size: 1em;
+  line-height: 1;
+  padding: 0.5em;
+  margin: 0 auto 0.5em auto;
+  border-radius: 2px;
+  background-color: #eee;
+  user-select: none;
 }
 
 input,

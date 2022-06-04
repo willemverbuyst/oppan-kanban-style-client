@@ -30,25 +30,6 @@
 </script>
 
 <style>
-  h2 {
-    font-size: 2em;
-    font-weight: 200;
-    user-select: none;
-  }
-
-  label {
-    top: 0;
-    left: 0;
-    display: block;
-    font-size: 1em;
-    line-height: 1;
-    padding: 0.5em;
-    margin: 0 auto 0.5em auto;
-    border-radius: 2px;
-    background-color: #eee;
-    user-select: none;
-  }
-
   button {
     float: right;
     height: 1em;
