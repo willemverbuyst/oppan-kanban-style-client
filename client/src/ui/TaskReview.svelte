@@ -29,6 +29,10 @@
 </div>
 
 <style>
+  input[type='checkbox'] {
+    visibility: hidden;
+  }
+
   button {
     float: right;
     height: 1em;

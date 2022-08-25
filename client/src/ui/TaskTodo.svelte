@@ -21,7 +21,7 @@
       out:send={{ key: task.id }}
       animate:flip
     >
-      <input type="checkbox" on:change={() => (task.status = 'in-progress')} />
+      <input type="checkbox" on:click={() => (task.status = 'in-progress')} />
       {task.description}
       <button on:click={() => removeTask(task)}>x</button>
     </label>
@@ -29,6 +29,10 @@
 </div>
 
 <style>
+  input[type='checkbox'] {
+    visibility: hidden;
+  }
+
   button {
     float: right;
     height: 1em;
