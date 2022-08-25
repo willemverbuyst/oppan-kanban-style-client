@@ -1,17 +1,32 @@
 <script lang="ts">
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
-  import {receive, send} from "../business/crossfade"
+  import { receive, send } from '../business/crossfade';
   import type { Task } from '../models/task';
-  
-  export let tasks: Task[]
+
+  export let tasks: Task[];
 
   const dispatch = createEventDispatcher();
 
   function removeTask(task) {
-    dispatch("removeTask",{taskId: task.id})
-  } 
+    dispatch('removeTask', { taskId: task.id });
+  }
 </script>
+
+<div class="in-progress">
+  <h2>in progress</h2>
+  {#each tasks.filter((t) => t.status === 'in-progress') as task (task.id)}
+    <label
+      in:receive={{ key: task.id }}
+      out:send={{ key: task.id }}
+      animate:flip
+    >
+      <input type="checkbox" on:change={() => (task.status = 'review')} />
+      {task.description}
+      <button on:click={() => removeTask(task)}>x</button>
+    </label>
+  {/each}
+</div>
 
 <style>
   button {
@@ -42,22 +57,3 @@
     background-color: #ffbc47;
   }
 </style>
-
-
-<div class="in-progress">
-  <h2>in progress</h2>
-  {#each tasks.filter((t) => t.status === 'in-progress') as task (task.id)}
-    <label
-      in:receive={{ key: task.id }}
-      out:send={{ key: task.id }}
-      animate:flip>
-      <input type="checkbox" on:change={() => (task.status = 'review')} />
-      {task.description}
-      <button on:click={() => removeTask(task)}>x</button>
-    </label>
-  {/each}
-</div>
-
-  
-
-

@@ -1,3 +1,7 @@
+<div>
+  <h1>Oppan Kanban Style</h1>
+</div>
+
 <style>
   div {
     color: #fff;
@@ -8,7 +12,3 @@
     background-color: #1d2d60;
   }
 </style>
-
-<div>
-  <h1>Oppan Kanban Style</h1>
-</div>
