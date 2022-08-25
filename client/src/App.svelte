@@ -1,3 +1,4 @@
+// @ts-check
 <script lang="ts">
   import Header from './ui/Header.svelte';
   import NewTodoInput from './ui/NewTodoInput.svelte'
@@ -5,9 +6,10 @@
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskReview from './ui/TaskReview.svelte'
   import TaskTodo from './ui/TaskTodo.svelte';
-  import dummyData from "./data/dummy-data.json"
+  import dummyData from "./data/dummy-data.json"  
+  import type { Task } from './models/task';
 
-  let tasks: {[key: string]: number | string | boolean}[] = dummyData
+  let tasks: Task[]= dummyData
   let uid = tasks.length + 1;
 
   function add(event) {

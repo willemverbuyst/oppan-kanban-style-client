@@ -1,9 +1,10 @@
-<script>
+<script lang="ts">
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
   import {receive, send} from "../business/crossfade"
+  import type { Task } from '../models/task';
 
-  export let tasks
+  export let tasks: Task[]
 
   const dispatch = createEventDispatcher();
 
