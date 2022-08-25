@@ -1,13 +1,13 @@
-<script>
-  import Header from './Header.svelte';
-  import NewTodoInput from './NewTodoInput.svelte'
-  import TaskDone from './TaskDone.svelte'
-  import TaskInProgress from './TaskInProgress.svelte';
-  import TaskReview from './TaskReview.svelte'
-  import TaskTodo from './TaskTodo.svelte';
-  import dummyData from '../data/dummy-data.json';
+<script lang="ts">
+  import Header from './ui/Header.svelte';
+  import NewTodoInput from './ui/NewTodoInput.svelte'
+  import TaskDone from './ui/TaskDone.svelte'
+  import TaskInProgress from './ui/TaskInProgress.svelte';
+  import TaskReview from './ui/TaskReview.svelte'
+  import TaskTodo from './ui/TaskTodo.svelte';
+  import dummyData from "./data/dummy-data.json"
 
-  let tasks = dummyData
+  let tasks: {[key: string]: number | string | boolean}[] = dummyData
   let uid = tasks.length + 1;
 
   function add(event) {
