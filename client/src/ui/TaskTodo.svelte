@@ -41,7 +41,7 @@
     line-height: 1;
     background-color: transparent;
     border: none;
-    color: rgb(170, 30, 30);
+    color: var(--text-color-dark);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -58,6 +58,6 @@
   }
 
   .todo label {
-    background-color: #f2f2f0;
+    background-color: var(--label-bg-todo);
   }
 </style>

@@ -41,7 +41,7 @@
     line-height: 1;
     background-color: transparent;
     border: none;
-    color: rgb(170, 30, 30);
+    color: var(--text-color-dark);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -58,7 +58,7 @@
   }
 
   .done label {
-    background-color: #40cee2;
-    color: #fff;
+    background-color: var(--label-bg-done);
+    color: var(--text-color-light);
   }
 </style>

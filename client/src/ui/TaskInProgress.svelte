@@ -41,7 +41,7 @@
     line-height: 1;
     background-color: transparent;
     border: none;
-    color: rgb(170, 30, 30);
+    color: var(--text-color-dark);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -58,6 +58,6 @@
   }
 
   .in-progress label {
-    background-color: #ffbc47;
+    background-color: var(--label-bg-in-progress);
   }
 </style>

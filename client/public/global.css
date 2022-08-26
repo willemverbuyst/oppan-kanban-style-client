@@ -1,6 +1,13 @@
 :root {
   --main-bg-color: #f1f1f1;
-  --head-bg-color: #1d2d60;
+  --main-bg-color-dark: #aaa;
+  --header-bg-color: #1d2d60;
+  --text-color-light: #fff;
+  --text-color-dark: #333;
+  --label-bg-done: #40cee2;
+  --label-bg-in-progress: #ffbc47;
+  --label-bg-review: #f65e5d;
+  --label-bg-todo: #19bd03;
 }
 
 html,

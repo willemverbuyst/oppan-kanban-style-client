@@ -47,7 +47,7 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background-color: #aaa;
+    background-color: var(--main-bg-color-dark);
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 34px;
@@ -60,14 +60,14 @@
     width: 26px;
     left: 4px;
     bottom: 4px;
-    background-color: #1d2d60;
+    background-color: var(--header-bg-color);
     -webkit-transition: 0.4s;
     transition: 0.4s;
     border-radius: 50%;
   }
 
   input:checked + .slider {
-    background-color: #f1f1f1;
+    background-color: var(--main-bg-color);
   }
 
   input:checked + .slider:before {

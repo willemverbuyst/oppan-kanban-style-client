@@ -15,12 +15,12 @@
 
 <style>
   .header {
-    color: #fff;
+    color: var(--text-color-light);
     display: flex;
     justify-content: space-between;
     align-items: center;
     width: 100vw;
-    background-color: #1d2d60;
+    background-color: var(--header-bg-color);
   }
 
   .header__element {

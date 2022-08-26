@@ -41,7 +41,7 @@
     line-height: 1;
     background-color: transparent;
     border: none;
-    color: rgb(170, 30, 30);
+    color: var(--text-color-dark);
     opacity: 0;
     transition: opacity 0.2s;
   }
@@ -58,7 +58,7 @@
   }
 
   .review label {
-    background-color: #f65e5d;
-    color: #fff;
+    background-color: var(--label-bg-review);
+    color: var(--text-color-light);
   }
 </style>
