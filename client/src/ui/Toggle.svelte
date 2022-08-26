@@ -1,22 +1,25 @@
-<script>
-  import { darkModeStore } from '../store/appStore';
+<script lang="ts">
   import { changeBackgroundColor } from '../business/colors';
+  import { interpret } from 'xstate';
+  import { toggleMachine } from '../store/machine';
 
-  let checked;
+  let current;
 
-  darkModeStore.subscribe((mode) => {
-    checked = mode;
-  });
-
-  function handleChange() {
-    darkModeStore.toggleDarkMode();
-    changeBackgroundColor(checked);
-  }
+  const toggleService = interpret(toggleMachine)
+    .onTransition((state) => {
+      current = state;
+      changeBackgroundColor(current.matches('darkModeOn'));
+    })
+    .start();
 </script>
 
 <div class="switch">
   <label>
-    <input on:click={handleChange} type="checkbox" bind:checked />
+    <input
+      on:click={() => toggleService.send('TOGGLE')}
+      type="checkbox"
+      checked={current.matches('darkModeOn')}
+    />
     <span class="slider" />
   </label>
 </div>
