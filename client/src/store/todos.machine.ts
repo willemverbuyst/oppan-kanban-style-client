@@ -15,7 +15,6 @@ const createTodo = (title: string) => {
     id: nanoid(),
     title,
     status: Status.BACKLOG,
-    completed: false,
   };
 };
 
@@ -23,7 +22,6 @@ interface Todo {
   id: string;
   title: string;
   status: Status;
-  completed: boolean;
   ref: ActorRef<any>;
 }
 
@@ -40,9 +38,10 @@ const todosModel = createModel(
       'TODO.COMMIT': (todo: Todo) => ({ todo }),
       'TODO.DELETE': (id: string) => ({ id }),
       SHOW: (filter: string) => ({ filter }),
-      'MARK.completed': () => ({}),
-      'MARK.active': () => ({}),
-      CLEAR_COMPLETED: () => ({}),
+      'MARK.backlog': () => ({}),
+      'MARK.in_progress': () => ({}),
+      'MARK.review': () => ({}),
+      'MARK.done': () => ({}),
     },
   }
 );
@@ -116,20 +115,25 @@ export const todosMachine = todosModel.createMachine({
         filter: (_, event) => event.filter,
       }),
     },
-    'MARK.completed': {
+    'MARK.backlog': {
       actions: (context) => {
-        context.todos.forEach((todo) => todo.ref.send('SET_COMPLETED'));
+        context.todos.forEach((todo) => todo.ref.send('SET_BACKLOG'));
       },
     },
-    'MARK.active': {
+    'MARK.in_progress': {
       actions: (context) => {
         context.todos.forEach((todo) => todo.ref.send('SET_ACTIVE'));
       },
     },
-    CLEAR_COMPLETED: {
-      actions: todosModel.assign({
-        todos: (context) => context.todos.filter((todo) => !todo.completed),
-      }),
+    'MARK.review': {
+      actions: (context) => {
+        context.todos.forEach((todo) => todo.ref.send('SET_REVIEW'));
+      },
+    },
+    'MARK.done': {
+      actions: (context) => {
+        context.todos.forEach((todo) => todo.ref.send('SET_DONE'));
+      },
     },
   },
 });

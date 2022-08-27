@@ -8,7 +8,6 @@ const todoModel = createModel(
     title: '',
     prevTitle: '',
     status: '',
-    completed: false,
   },
   {
     events: {
@@ -30,12 +29,10 @@ export const createTodoMachine = ({
   id,
   title,
   status,
-  completed,
 }: {
   id: string;
   title: string;
   status: Status;
-  completed: boolean;
 }) => {
   return todoModel.createMachine(
     {
@@ -46,7 +43,6 @@ export const createTodoMachine = ({
         title,
         status,
         prevTitle: title,
-        completed,
       },
       on: {
         SET_BACKLOG: {
