@@ -8,7 +8,7 @@ import { dummyData } from '../data/dummy-data';
 export interface Todo {
   id: string;
   title: string;
-  status: string;
+  status: typeof Status[keyof typeof Status];
   ref: ActorRef<any>;
 }
 
@@ -23,12 +23,13 @@ const createTodo = (title: string) => {
 const todosModel = createModel(
   {
     todo: '',
-    todos: dummyData,
+    todos: dummyData as Todo[],
     filter: 'all',
   },
   {
     events: {
       'NEWTODO.COMMIT': (value: string) => ({ value }),
+      'TODO.COMMIT': (todo: Todo) => ({ todo }),
       'TODO.DELETE': (id: string) => ({ id }),
       'MARK.backlog': () => ({}),
       'MARK.in_progress': () => ({}),
@@ -72,6 +73,19 @@ export const todosMachine = todosModel.createMachine({
         'persist',
       ],
       cond: (_, event) => !!event.value.trim().length,
+    },
+    'TODO.COMMIT': {
+      actions: [
+        todosModel.assign({
+          todos: (context, event) =>
+            context.todos.map((todo) => {
+              return todo.id === event.todo.id
+                ? { ...todo, ...event.todo, ref: todo.ref }
+                : todo;
+            }),
+        }),
+        'persist',
+      ],
     },
     'TODO.DELETE': {
       actions: [

@@ -6,15 +6,14 @@ const todoModel = createModel(
   {
     id: '',
     title: '',
-    prevTitle: '',
     status: '',
   },
   {
     events: {
-      SET_BACKLOG: () => ({}),
-      SET_IN_PROGRESS: () => ({}),
-      SET_REVIEW: () => ({}),
-      SET_DONE: () => ({}),
+      SET_STATUS_BACKLOG: () => ({}),
+      SET_STATUS_IN_PROGRESS: () => ({}),
+      SET_STATUS_REVIEW: () => ({}),
+      SET_STATUS_DONE: () => ({}),
       DELETE: () => ({}),
     },
   }
@@ -31,58 +30,84 @@ export const createTodoMachine = ({
 }) => {
   return todoModel.createMachine({
     id: 'todo',
-    initial: 'reading',
+    initial: 'backlog',
     context: {
       id,
       title,
       status,
-      prevTitle: title,
     },
     on: {
-      SET_BACKLOG: {
+      SET_STATUS_BACKLOG: {
         actions: [
           todoModel.assign({ status: Status.BACKLOG }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
         ],
       },
-      SET_IN_PROGRESS: {
+      SET_STATUS_IN_PROGRESS: {
         actions: [
           todoModel.assign({ status: Status.IN_PROGRESS }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
         ],
       },
-      SET_REVIEW: {
+      SET_STATUS_REVIEW: {
         actions: [
           todoModel.assign({ status: Status.REVIEW }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
         ],
       },
-      SET_DONE: {
+      SET_STATUS_DONE: {
         actions: [
           todoModel.assign({ status: Status.DONE }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
         ],
       },
-      DELETE: 'deleted',
     },
     states: {
-      reading: {
+      backlog: {
         on: {
-          SET_BACKLOG: {
+          SET_STATUS_IN_PROGRESS: {
+            target: 'in_progress',
             actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
           },
-          SET_IN_PROGRESS: {
+          DELETE: 'deleted',
+        },
+      },
+      in_progress: {
+        on: {
+          SET_STATUS_BACKLOG: {
+            target: 'backlog',
+            actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
+          },
+          SET_STATUS_REVIEW: {
+            target: 'backlog',
+            actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
+          },
+          DELETE: 'deleted',
+        },
+      },
+      review: {
+        on: {
+          SET_STATUS_IN_PROGRESS: {
+            target: 'in_progress',
             actions: [
               todoModel.assign({ status: Status.IN_PROGRESS }),
               'commit',
             ],
           },
-          SET_REVIEW: {
+          SET_STATUS_DONE: {
+            target: 'done',
+            actions: [todoModel.assign({ status: Status.DONE }), 'done'],
+          },
+          DELETE: 'deleted',
+        },
+      },
+      done: {
+        on: {
+          SET_STATUS_REVIEW: {
+            target: 'backlog',
             actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
           },
-          SET_DONE: {
-            actions: [todoModel.assign({ status: Status.DONE }), 'commit'],
-          },
+          DELETE: 'deleted',
         },
       },
       deleted: {
