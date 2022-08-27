@@ -2,13 +2,8 @@ import { spawn, ActorRef } from 'xstate';
 import { nanoid } from 'nanoid';
 import { createTodoMachine } from './todoItem.machine';
 import { createModel } from 'xstate/lib/model';
-
-export enum Status {
-  BACKLOG = 'BACKLOG',
-  IN_PROGRESS = 'IN_PROGRESS',
-  REVIEW = 'REVIEW',
-  DONE = 'DONE',
-}
+import { Status } from '../models/status';
+import type { Todo } from '../models/task';
 
 const createTodo = (title: string) => {
   return {
@@ -17,13 +12,6 @@ const createTodo = (title: string) => {
     status: Status.BACKLOG,
   };
 };
-
-interface Todo {
-  id: string;
-  title: string;
-  status: Status;
-  ref: ActorRef<any>;
-}
 
 const todosModel = createModel(
   {
