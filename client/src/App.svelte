@@ -9,18 +9,18 @@
   import { interpret } from 'xstate';
 
   let todos;
-  const todosService = interpret(todosMachine, { devTools: true })
+  const todoService = interpret(todosMachine, { devTools: true })
     .onTransition((state) => {
       todos = state.context.todos;
     })
     .start();
 
   function remove(todoId) {
-    todosService.send({ type: 'TODO.DELETE', id: todoId.detail });
+    todoService.send({ type: 'TODO.DELETE', id: todoId.detail });
   }
 
   function add(event) {
-    todosService.send({ type: 'NEWTODO.COMMIT', value: event.detail.text });
+    todoService.send({ type: 'NEWTODO.COMMIT', value: event.detail.text });
   }
 </script>
 
