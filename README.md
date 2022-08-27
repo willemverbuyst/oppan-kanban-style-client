@@ -1,5 +1,6 @@
 ## What is this?
 
-A repo to practice Svelte. Based on the todo-list example on the Svelte website.
+A repo to practice Svelte and XState
 
+![screenshot](./screenshot_xstate_visualizer.png)
 ![screenshot](./screenshot_kanban.png)
