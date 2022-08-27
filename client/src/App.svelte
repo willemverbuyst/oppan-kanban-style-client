@@ -9,7 +9,7 @@
   import { interpret } from 'xstate';
 
   let todos;
-  const todosService = interpret(todosMachine)
+  const todosService = interpret(todosMachine, { devTools: true })
     .onTransition((state) => {
       todos = state.context.todos;
     })
