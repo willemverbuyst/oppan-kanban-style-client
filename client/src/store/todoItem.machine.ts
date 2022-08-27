@@ -67,7 +67,10 @@ export const createTodoMachine = ({
         on: {
           SET_STATUS_IN_PROGRESS: {
             target: 'in_progress',
-            actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
+            actions: [
+              todoModel.assign({ status: Status.IN_PROGRESS }),
+              'commit',
+            ],
           },
           DELETE: 'deleted',
         },
@@ -79,7 +82,7 @@ export const createTodoMachine = ({
             actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
           },
           SET_STATUS_REVIEW: {
-            target: 'backlog',
+            target: 'review',
             actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
           },
           DELETE: 'deleted',
@@ -104,7 +107,7 @@ export const createTodoMachine = ({
       done: {
         on: {
           SET_STATUS_REVIEW: {
-            target: 'backlog',
+            target: 'review',
             actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
           },
           DELETE: 'deleted',
