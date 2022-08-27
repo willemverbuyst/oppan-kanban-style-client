@@ -14,7 +14,7 @@
 </script>
 
 <div class="todo">
-  <h2>todo</h2>
+  <h2>backlog</h2>
   {#each tasks.filter((t) => t.status === 'todo') as task (task.id)}
     <label
       in:receive={{ key: task.id }}

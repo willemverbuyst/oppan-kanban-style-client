@@ -4,7 +4,7 @@
   import TaskDone from './ui/TaskDone.svelte';
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskReview from './ui/TaskReview.svelte';
-  import TaskTodo from './ui/TaskTodo.svelte';
+  import TaskBacklog from './ui/TaskBacklog.svelte';
   import dummyData from './data/dummy-data.json';
   import type { Task } from './models/task';
 
@@ -29,7 +29,7 @@
 <Header />
 <NewTodoInput on:addTodo={add} />
 <div class="board">
-  <TaskTodo bind:tasks on:removeTask={remove} />
+  <TaskBacklog bind:tasks on:removeTask={remove} />
   <TaskInProgress bind:tasks on:removeTask={remove} />
   <TaskReview bind:tasks on:removeTask={remove} />
   <TaskDone bind:tasks on:removeTask={remove} />
