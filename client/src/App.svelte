@@ -5,34 +5,32 @@
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskReview from './ui/TaskReview.svelte';
   import TaskBacklog from './ui/TaskBacklog.svelte';
-  import { dummyData } from './data/dummy-data';
-  import type { Task } from './models/task';
-  import { nanoid } from 'nanoid';
+  import { todosMachine } from './store/todos.machine';
+  import { interpret } from 'xstate';
 
-  let tasks: Task[] = dummyData;
+  let todos;
+  const todosService = interpret(todosMachine)
+    .onTransition((state) => {
+      todos = state.context.todos;
+    })
+    .start();
 
-  function add(event) {
-    const task = {
-      id: nanoid(),
-      status: 'todo',
-      title: event.detail.text,
-    };
-
-    tasks = [task, ...tasks];
+  function remove(todoId) {
+    todosService.send({ type: 'TODO.DELETE', id: todoId.detail });
   }
 
-  function remove(task) {
-    tasks = tasks.filter((t) => t.id !== task.detail.taskId);
+  function add(event) {
+    todosService.send({ type: 'NEWTODO.COMMIT', value: event.detail.text });
   }
 </script>
 
 <Header />
 <NewTodoInput on:addTodo={add} />
 <div class="board">
-  <TaskBacklog bind:tasks on:removeTask={remove} />
-  <TaskInProgress bind:tasks on:removeTask={remove} />
-  <TaskReview bind:tasks on:removeTask={remove} />
-  <TaskDone bind:tasks on:removeTask={remove} />
+  <TaskBacklog bind:todos on:removeTodo={remove} />
+  <TaskInProgress bind:todos on:removeTodo={remove} />
+  <TaskReview bind:todos on:removeTodo={remove} />
+  <TaskDone bind:todos on:removeTodo={remove} />
 </div>
 
 <style>

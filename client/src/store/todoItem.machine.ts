@@ -32,7 +32,7 @@ export const createTodoMachine = ({
 }: {
   id: string;
   title: string;
-  status: Status;
+  status: typeof Status[keyof typeof Status];
 }) => {
   return todoModel.createMachine(
     {

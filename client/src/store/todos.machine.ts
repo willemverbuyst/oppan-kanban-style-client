@@ -3,7 +3,13 @@ import { nanoid } from 'nanoid';
 import { createTodoMachine } from './todoItem.machine';
 import { createModel } from 'xstate/lib/model';
 import { Status } from '../models/status';
-import type { Todo } from '../models/task';
+
+export interface Todo {
+  id: string;
+  title: string;
+  status: string;
+  ref: ActorRef<any>;
+}
 
 const createTodo = (title: string) => {
   return {
@@ -16,7 +22,7 @@ const createTodo = (title: string) => {
 const todosModel = createModel(
   {
     todo: '',
-    todos: [] as Todo[],
+    todos: [],
     filter: 'all',
   },
   {

@@ -65,6 +65,7 @@ export default {
       inlineSources: !production,
     }),
     replace({
+      preventAssignment: true,
       'process.env.NODE_ENV': process.env.NODE_ENV,
     }),
 

@@ -2,32 +2,31 @@
   import { flip } from 'svelte/animate';
   import { createEventDispatcher } from 'svelte';
   import { receive, send } from '../business/crossfade';
-  import type { Task } from '../models/task';
   import { Status } from '../models/status';
+  import type { Todo } from '../store/todos.machine';
 
-  export let tasks: Task[];
-
+  export let todos: Todo[];
   const dispatch = createEventDispatcher();
 
-  function removeTask(task) {
-    dispatch('removeTask', { taskId: task.id });
+  function removeTodo(todoId: string) {
+    dispatch('removeTodo', todoId);
   }
 </script>
 
 <div class="todo">
   <h2>backlog</h2>
-  {#each tasks.filter((t) => t.status === Status.BACKLOG) as task (task.id)}
+  {#each todos.filter((t) => t.status === Status.BACKLOG) as todo (todo.id)}
     <label
-      in:receive={{ key: task.id }}
-      out:send={{ key: task.id }}
+      in:receive={{ key: todo.id }}
+      out:send={{ key: todo.id }}
       animate:flip
     >
       <input
         type="checkbox"
-        on:click={() => (task.status = Status.IN_PROGRESS)}
+        on:click={() => (todo.status = Status.IN_PROGRESS)}
       />
-      {task.title}
-      <button on:click={() => removeTask(task)}>x</button>
+      {todo.title}
+      <button on:click={() => removeTodo(todo.id)}>x</button>
     </label>
   {/each}
 </div>

@@ -35,7 +35,7 @@ export const dummyData = [
   {
     id: nanoid(),
     status: Status.BACKLOG,
-    title: 'Learn Sass',
+    title: 'Learn XState',
   },
   {
     id: nanoid(),
