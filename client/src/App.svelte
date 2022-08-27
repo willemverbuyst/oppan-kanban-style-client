@@ -5,17 +5,17 @@
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskReview from './ui/TaskReview.svelte';
   import TaskBacklog from './ui/TaskBacklog.svelte';
-  import dummyData from './data/dummy-data.json';
+  import { dummyData } from './data/dummy-data';
   import type { Task } from './models/task';
+  import { nanoid } from 'nanoid';
 
   let tasks: Task[] = dummyData;
-  let uid = tasks.length + 1;
 
   function add(event) {
     const task = {
-      id: uid++,
+      id: nanoid(),
       status: 'todo',
-      description: event.detail.text,
+      title: event.detail.text,
     };
 
     tasks = [task, ...tasks];

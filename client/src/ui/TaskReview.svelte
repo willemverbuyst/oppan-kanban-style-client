@@ -3,6 +3,7 @@
   import { createEventDispatcher } from 'svelte';
   import { receive, send } from '../business/crossfade';
   import type { Task } from '../models/task';
+  import { Status } from '../models/status';
 
   export let tasks: Task[];
 
@@ -15,14 +16,14 @@
 
 <div class="review">
   <h2>review</h2>
-  {#each tasks.filter((t) => t.status === 'review') as task (task.id)}
+  {#each tasks.filter((t) => t.status === Status.REVIEW) as task (task.id)}
     <label
       in:receive={{ key: task.id }}
       out:send={{ key: task.id }}
       animate:flip
     >
-      <input type="checkbox" on:change={() => (task.status = 'done')} />
-      {task.description}
+      <input type="checkbox" on:change={() => (task.status = Status.DONE)} />
+      {task.title}
       <button on:click={() => removeTask(task)}>x</button>
     </label>
   {/each}
