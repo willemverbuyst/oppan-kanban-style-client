@@ -1,6 +1,6 @@
 import { sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { Status } from '../models/status';
+import { State, Status } from '../models/status';
 
 const todoModel = createModel(
   {
@@ -10,10 +10,10 @@ const todoModel = createModel(
   },
   {
     events: {
-      SET_STATUS_BACKLOG: () => ({}),
-      SET_STATUS_IN_PROGRESS: () => ({}),
-      SET_STATUS_REVIEW: () => ({}),
-      SET_STATUS_DONE: () => ({}),
+      MOVE_TO_BACKLOG: () => ({}),
+      MOVE_TO_IN_PROGRESS: () => ({}),
+      MOVE_TO_IN_REVIEW: () => ({}),
+      MOVE_TO_DONE: () => ({}),
       DELETE: () => ({}),
     },
   }
@@ -30,32 +30,29 @@ export const createTodoMachine = ({
 }) => {
   return todoModel.createMachine({
     id: 'todo',
-    initial: 'backlog',
+    initial: State.BACKLOG,
     context: {
       id,
       title,
       status,
     },
     on: {
-      SET_STATUS_BACKLOG: {
-        actions: [
-          todoModel.assign({ status: Status.BACKLOG }),
-          sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
-        ],
+      MOVE_TO_BACKLOG: {
+        actions: [todoModel.assign({ status: Status.BACKLOG })],
       },
-      SET_STATUS_IN_PROGRESS: {
+      MOVE_TO_IN_PROGRESS: {
         actions: [
           todoModel.assign({ status: Status.IN_PROGRESS }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
         ],
       },
-      SET_STATUS_REVIEW: {
+      MOVE_TO_IN_REVIEW: {
         actions: [
           todoModel.assign({ status: Status.REVIEW }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
         ],
       },
-      SET_STATUS_DONE: {
+      MOVE_TO_DONE: {
         actions: [
           todoModel.assign({ status: Status.DONE }),
           sendParent((context) => ({ type: 'TODO.COMMIT', todo: context })),
@@ -63,57 +60,57 @@ export const createTodoMachine = ({
       },
     },
     states: {
-      backlog: {
+      [State.BACKLOG]: {
         on: {
-          SET_STATUS_IN_PROGRESS: {
-            target: 'in_progress',
+          MOVE_TO_IN_PROGRESS: {
+            target: State.IN_PROGRESS,
             actions: [
               todoModel.assign({ status: Status.IN_PROGRESS }),
               'commit',
             ],
           },
-          DELETE: 'deleted',
+          DELETE: State.DELETED,
         },
       },
-      in_progress: {
+      [State.IN_PROGRESS]: {
         on: {
-          SET_STATUS_BACKLOG: {
-            target: 'backlog',
+          MOVE_TO_BACKLOG: {
+            target: State.BACKLOG,
             actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
           },
-          SET_STATUS_REVIEW: {
-            target: 'review',
+          MOVE_TO_IN_REVIEW: {
+            target: State.REVIEW,
             actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
           },
-          DELETE: 'deleted',
+          DELETE: State.DELETED,
         },
       },
-      review: {
+      [State.REVIEW]: {
         on: {
-          SET_STATUS_IN_PROGRESS: {
-            target: 'in_progress',
+          MOVE_TO_IN_PROGRESS: {
+            target: State.IN_PROGRESS,
             actions: [
               todoModel.assign({ status: Status.IN_PROGRESS }),
               'commit',
             ],
           },
-          SET_STATUS_DONE: {
-            target: 'done',
-            actions: [todoModel.assign({ status: Status.DONE }), 'done'],
+          MOVE_TO_DONE: {
+            target: State.DONE,
+            actions: [todoModel.assign({ status: Status.DONE }), 'commit'],
           },
-          DELETE: 'deleted',
+          DELETE: State.DELETED,
         },
       },
-      done: {
+      [State.DONE]: {
         on: {
-          SET_STATUS_REVIEW: {
-            target: 'review',
+          MOVE_TO_IN_REVIEW: {
+            target: State.REVIEW,
             actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
           },
-          DELETE: 'deleted',
+          DELETE: State.DELETED,
         },
       },
-      deleted: {
+      [State.DELETED]: {
         entry: sendParent((context) => ({
           type: 'TODO.DELETE',
           id: context.id,

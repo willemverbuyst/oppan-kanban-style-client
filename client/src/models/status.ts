@@ -4,3 +4,5 @@ export const Status = {
   REVIEW: 'REVIEW',
   DONE: 'DONE',
 } as const;
+
+export const State = { ...Status, DELETED: 'DELETED' } as const;

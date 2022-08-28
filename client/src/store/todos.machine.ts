@@ -1,4 +1,4 @@
-import { spawn, actions, ActorRef } from 'xstate';
+import { spawn, ActorRef } from 'xstate';
 import { nanoid } from 'nanoid';
 import { createTodoMachine } from './todoItem.machine';
 import { createModel } from 'xstate/lib/model';
@@ -31,10 +31,6 @@ const todosModel = createModel(
       'NEWTODO.COMMIT': (value: string) => ({ value }),
       'TODO.COMMIT': (todo: Todo) => ({ todo }),
       'TODO.DELETE': (id: string) => ({ id }),
-      'MARK.backlog': () => ({}),
-      'MARK.in_progress': () => ({}),
-      'MARK.review': () => ({}),
-      'MARK.done': () => ({}),
     },
   }
 );
@@ -95,27 +91,6 @@ export const todosMachine = todosModel.createMachine({
         }),
         'persist',
       ],
-    },
-    'MARK.backlog': {
-      actions: (context) => {
-        console.log('test');
-        context.todos.forEach((todo) => todo.ref.send('SET_BACKLOG'));
-      },
-    },
-    'MARK.in_progress': {
-      actions: (context) => {
-        context.todos.forEach((todo) => todo.ref.send('SET_ACTIVE'));
-      },
-    },
-    'MARK.review': {
-      actions: (context) => {
-        context.todos.forEach((todo) => todo.ref.send('SET_REVIEW'));
-      },
-    },
-    'MARK.done': {
-      actions: (context) => {
-        context.todos.forEach((todo) => todo.ref.send('SET_DONE'));
-      },
     },
   },
 });
