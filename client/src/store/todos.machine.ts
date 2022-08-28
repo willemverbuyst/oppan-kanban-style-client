@@ -24,7 +24,6 @@ const todosModel = createModel(
   {
     todo: '',
     todos: dummyData as Todo[],
-    filter: 'all',
   },
   {
     events: {
