@@ -1,5 +1,5 @@
 import { nanoid } from 'nanoid';
-import { Status } from '../models/status';
+import { Status } from '../models/todo';
 
 export const dummyData = [
   {

@@ -1,9 +1,9 @@
 import { spawn, ActorRef } from 'xstate';
 import { nanoid } from 'nanoid';
-import { createTodoMachine } from './todoItem.machine';
+import { createTodoMachine } from './todo.machine';
 import { createModel } from 'xstate/lib/model';
-import { Status } from '../models/status';
-import { dummyData } from '../data/dummy-data';
+import { Status } from '../../models/todo';
+import { dummyData } from '../../data/dummy-data';
 
 export interface Todo {
   id: string;

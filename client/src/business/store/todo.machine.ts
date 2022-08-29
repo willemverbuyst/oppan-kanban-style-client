@@ -1,6 +1,6 @@
 import { sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { State, Status } from '../models/status';
+import { State, Status } from '../../models/todo';
 
 const todoModel = createModel(
   {

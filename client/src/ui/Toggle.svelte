@@ -1,7 +1,7 @@
 <script lang="ts">
   import { changeBackgroundColor } from '../business/colors';
   import { interpret } from 'xstate';
-  import { toggleMachine } from '../store/machine';
+  import { toggleMachine } from '../business/store/darkMode.machine';
 
   let current;
 

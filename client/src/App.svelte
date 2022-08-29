@@ -2,13 +2,13 @@
   import Header from './ui/Header.svelte';
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskBacklog from './ui/TaskBacklog.svelte';
-  import { todosMachine } from './store/todos.machine';
+  import { todosMachine } from './business/store/todos.machine';
   import { useMachine } from '@xstate/svelte';
-  import { Status } from './models/status';
+  import { Status } from './models/todo';
   import TaskDone from './ui/TaskDone.svelte';
   import TaskReview from './ui/TaskReview.svelte';
   import NewTodoInput from './ui/NewTodoInput.svelte';
-  import type { Todo } from './store/todos.machine';
+  import type { Todo } from './business/store/todos.machine';
 
   const { state, send } = useMachine(todosMachine, { devTools: true });
 
