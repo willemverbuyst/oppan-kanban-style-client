@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Actions } from '../models/todo';
+
   export let actor = null;
 
   const { send } = actor;
@@ -8,12 +10,17 @@
 <div class="container">
   <div class="label">
     <div>{title}</div>
-    <button class="arrow-right" on:click={() => send('MOVE_TO_IN_PROGRESS')}>
+    <button
+      class="arrow-right"
+      on:click={() => send(Actions.MOVE_TO_IN_PROGRESS)}
+    >
       &#8594;
     </button>
   </div>
   <div>
-    <button class="btn__delete" on:click={() => send('DELETE')}>&#215;</button>
+    <button class="btn__delete" on:click={() => send(Actions.DELETE)}
+      >&#215;</button
+    >
   </div>
 </div>
 

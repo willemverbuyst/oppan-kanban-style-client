@@ -1,4 +1,6 @@
 <script lang="ts">
+  import { Actions } from '../models/todo';
+
   // import { flip } from 'svelte/animate';
   // import { createEventDispatcher } from 'svelte';
   // import { receive, send } from '../business/crossfade';
@@ -13,16 +15,18 @@
 
 <div class="container">
   <div class="label">
-    <button class="arrow-left" on:click={() => send('MOVE_TO_BACKLOG')}>
+    <button class="arrow-left" on:click={() => send(Actions.MOVE_TO_BACKLOG)}>
       &#8592;
     </button>
     <div>{title}</div>
-    <button class="arrow-right" on:click={() => send('MOVE_TO_REVIEW')}>
+    <button class="arrow-right" on:click={() => send(Actions.MOVE_TO_REVIEW)}>
       &#8594;
     </button>
   </div>
   <div>
-    <button class="btn__delete" on:click={() => send('DELETE')}>&#215;</button>
+    <button class="btn__delete" on:click={() => send(Actions.DELETE)}
+      >&#215;</button
+    >
   </div>
 </div>
 
