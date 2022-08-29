@@ -7,7 +7,7 @@
   --label-bg-done: #40cee2;
   --label-bg-in-progress: #ffbc47;
   --label-bg-review: #f65e5d;
-  --label-bg-todo: #19bd03;
+  --label-bg-backlog: #19bd03;
 }
 
 html,

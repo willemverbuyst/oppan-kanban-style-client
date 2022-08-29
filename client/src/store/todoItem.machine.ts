@@ -12,7 +12,7 @@ const todoModel = createModel(
     events: {
       MOVE_TO_BACKLOG: () => ({}),
       MOVE_TO_IN_PROGRESS: () => ({}),
-      MOVE_TO_IN_REVIEW: () => ({}),
+      MOVE_TO_REVIEW: () => ({}),
       MOVE_TO_DONE: () => ({}),
       DELETE: () => ({}),
     },
@@ -56,7 +56,7 @@ export const createTodoMachine = ({
               target: State.BACKLOG,
               actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
             },
-            MOVE_TO_IN_REVIEW: {
+            MOVE_TO_REVIEW: {
               target: State.REVIEW,
               actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
             },
@@ -81,7 +81,7 @@ export const createTodoMachine = ({
         },
         [State.DONE]: {
           on: {
-            MOVE_TO_IN_REVIEW: {
+            MOVE_TO_REVIEW: {
               target: State.REVIEW,
               actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
             },

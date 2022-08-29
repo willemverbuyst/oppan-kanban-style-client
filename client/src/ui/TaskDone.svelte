@@ -1,64 +1,59 @@
 <script lang="ts">
-  import { flip } from 'svelte/animate';
-  import { createEventDispatcher } from 'svelte';
-  import { receive, send } from '../business/crossfade';
-  import { Status } from '../models/status';
-  import type { Todo } from '../store/todos.machine';
+  export let actor = null;
 
-  export let todos: Todo[];
-  const dispatch = createEventDispatcher();
-
-  function removeTodo(todoId: string) {
-    dispatch('removeTodo', todoId);
-  }
+  const { send } = actor;
+  $: ({ id, title } = $actor.context);
 </script>
 
-<div class="done">
-  <h2>done</h2>
-  {#each todos.filter((t) => t.status === Status.DONE) as todo (todo.id)}
-    <label
-      in:receive={{ key: todo.id }}
-      out:send={{ key: todo.id }}
-      animate:flip
-    >
-      <input type="checkbox" on:change={() => removeTodo(todo.id)} />
-      {todo.title}
-      <button on:click={() => removeTodo(todo.id)}>x</button>
-    </label>
-  {/each}
+<div class="container">
+  <div class="label">
+    <button class="arrow-left" on:click={() => send('MOVE_TO_REVIEW')}>
+      &#8592;
+    </button>
+    <div>{title}</div>
+  </div>
+  <div>
+    <button class="btn__delete" on:click={() => send('DELETE')}>&#215;</button>
+  </div>
 </div>
 
 <style>
-  input[type='checkbox'] {
-    visibility: hidden;
+  .container {
+    background-color: var(--label-bg-done);
+    text-align: center;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+
+  .label {
+    display: flex;
+    justify-content: space-between;
   }
 
   button {
-    float: right;
-    height: 1em;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
-    padding: 0 0.5em;
     line-height: 1;
     background-color: transparent;
     border: none;
-    color: var(--text-color-dark);
+    color: var(--text-color-light);
     opacity: 0;
     transition: opacity 0.2s;
   }
 
-  label:hover button {
-    opacity: 1;
-  }
-
-  .done {
-    float: left;
-    width: 25%;
-    padding: 0 1em 0 0;
-    box-sizing: border-box;
-  }
-
-  .done label {
+  .btn__delete {
+    position: absolute;
+    top: -0.3rem;
+    right: -0.1rem;
     background-color: var(--label-bg-done);
-    color: var(--text-color-light);
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+  }
+
+  .container:hover button {
+    opacity: 1;
   }
 </style>

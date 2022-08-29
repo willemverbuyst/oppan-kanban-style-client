@@ -1,46 +1,40 @@
 <script lang="ts">
-  import { flip } from 'svelte/animate';
-  import { createEventDispatcher } from 'svelte';
-  import { receive, send } from '../business/crossfade';
-  import { Status } from '../models/status';
-  import type { Todo } from '../store/todos.machine';
+  export let actor = null;
 
-  export let todos: Todo[];
-  const dispatch = createEventDispatcher();
-
-  function removeTodo(todoId: string) {
-    dispatch('removeTodo', todoId);
-  }
+  const { send } = actor;
+  $: ({ id, title } = $actor.context);
 </script>
 
-<div class="todo">
-  <h2>backlog</h2>
-  {#each todos.filter((t) => t.status === Status.BACKLOG) as todo (todo.id)}
-    <label
-      in:receive={{ key: todo.id }}
-      out:send={{ key: todo.id }}
-      animate:flip
-    >
-      <input
-        type="checkbox"
-        on:click={() => (todo.status = Status.IN_PROGRESS)}
-      />
-      {todo.title}
-      <button on:click={() => removeTodo(todo.id)}>x</button>
-    </label>
-  {/each}
+<div class="container">
+  <div class="label">
+    <div>{title}</div>
+    <button class="arrow-right" on:click={() => send('MOVE_TO_IN_PROGRESS')}>
+      &#8594;
+    </button>
+  </div>
+  <div>
+    <button class="btn__delete" on:click={() => send('DELETE')}>&#215;</button>
+  </div>
 </div>
 
 <style>
-  input[type='checkbox'] {
-    visibility: hidden;
+  .container {
+    background-color: var(--label-bg-backlog);
+    text-align: center;
+    margin: 1rem;
+    padding: 0.5rem 1rem;
+    position: relative;
+  }
+
+  .label {
+    display: flex;
+    justify-content: space-between;
   }
 
   button {
-    float: right;
-    height: 1em;
+    padding: 0;
+    margin: 0;
     box-sizing: border-box;
-    padding: 0 0.5em;
     line-height: 1;
     background-color: transparent;
     border: none;
@@ -49,18 +43,17 @@
     transition: opacity 0.2s;
   }
 
-  label:hover button {
+  .btn__delete {
+    position: absolute;
+    top: -0.3rem;
+    right: -0.1rem;
+    background-color: var(--label-bg-backlog);
+    height: 1rem;
+    width: 1rem;
+    border-radius: 50%;
+  }
+
+  .container:hover button {
     opacity: 1;
-  }
-
-  .todo {
-    float: left;
-    width: 25%;
-    padding: 0 1em 0 0;
-    box-sizing: border-box;
-  }
-
-  .todo label {
-    background-color: var(--label-bg-todo);
   }
 </style>
