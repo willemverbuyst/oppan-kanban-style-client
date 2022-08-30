@@ -9,6 +9,7 @@
 
 <div class="container">
   <div class="label">
+    <div />
     <div>{title}</div>
     <button
       class="arrow-right"
@@ -34,8 +35,8 @@
   }
 
   .label {
-    display: flex;
-    justify-content: space-between;
+    display: grid;
+    grid-template-columns: 0.2fr 1fr 0.2fr;
   }
 
   button {
