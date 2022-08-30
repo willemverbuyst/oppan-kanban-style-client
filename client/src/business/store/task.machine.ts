@@ -31,7 +31,7 @@ export const createTaskMachine = ({
   return taskModel.createMachine(
     {
       id: 'task',
-      initial: State.BACKLOG,
+      initial: status,
       context: {
         id,
         title,

@@ -3,7 +3,6 @@ import { nanoid } from 'nanoid';
 import { createTaskMachine } from './task.machine';
 import { createModel } from 'xstate/lib/model';
 import { Status } from '../../models/task';
-import { dummyData } from '../../data/dummy-data';
 
 export interface Task {
   id: string;
@@ -23,7 +22,7 @@ const createTask = (title: string) => {
 const tasksModel = createModel(
   {
     task: '',
-    tasks: dummyData as Task[],
+    tasks: [] as Task[],
   },
   {
     events: {

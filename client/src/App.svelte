@@ -9,8 +9,34 @@
   import TaskReview from './ui/TaskReview.svelte';
   import NewTaskInput from './ui/NewTaskInput.svelte';
   import type { Task } from './business/store/tasks.machine';
+  import { dummyData } from './data/dummy-data';
 
-  const { state, send } = useMachine(tasksMachine, { devTools: true });
+  const persistedTasksMachine = tasksMachine.withConfig(
+    {
+      actions: {
+        persist: (ctx) => {
+          try {
+            console.log('to be save to db');
+          } catch (e) {
+            console.error(e);
+          }
+        },
+      },
+    },
+    {
+      task: '',
+      tasks: (() => {
+        try {
+          return (dummyData as Task[]) || [];
+        } catch (e) {
+          console.error(e);
+          return [];
+        }
+      })(),
+    }
+  );
+
+  const { state, send } = useMachine(persistedTasksMachine);
 
   $: ({ tasks } = $state.context);
   $: backlogTasks = filterOnStatus(tasks, Status.BACKLOG);
