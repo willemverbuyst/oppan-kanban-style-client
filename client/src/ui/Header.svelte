@@ -1,16 +1,8 @@
-<script>
-  import Toggle from './Toggle.svelte';
-
-  let acceptTerms = false;
-</script>
-
 <div class="header">
   <div class="header__element">
     <h1>Oppan Kanban Style</h1>
   </div>
-  <div class="header__element">
-    <Toggle bind:checked={acceptTerms} />
-  </div>
+  <div class="header__element" />
 </div>
 
 <style>
