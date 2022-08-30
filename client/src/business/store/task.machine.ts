@@ -1,8 +1,8 @@
 import { sendParent } from 'xstate';
 import { createModel } from 'xstate/lib/model';
-import { State, Status } from '../../models/todo';
+import { State, Status } from '../../models/task';
 
-const todoModel = createModel(
+const taskModel = createModel(
   {
     id: '',
     title: '',
@@ -19,7 +19,7 @@ const todoModel = createModel(
   }
 );
 
-export const createTodoMachine = ({
+export const createTaskMachine = ({
   id,
   title,
   status,
@@ -28,9 +28,9 @@ export const createTodoMachine = ({
   title: string;
   status: typeof Status[keyof typeof Status];
 }) => {
-  return todoModel.createMachine(
+  return taskModel.createMachine(
     {
-      id: 'todo',
+      id: 'task',
       initial: State.BACKLOG,
       context: {
         id,
@@ -43,7 +43,7 @@ export const createTodoMachine = ({
             MOVE_TO_IN_PROGRESS: {
               target: State.IN_PROGRESS,
               actions: [
-                todoModel.assign({ status: Status.IN_PROGRESS }),
+                taskModel.assign({ status: Status.IN_PROGRESS }),
                 'commit',
               ],
             },
@@ -54,11 +54,11 @@ export const createTodoMachine = ({
           on: {
             MOVE_TO_BACKLOG: {
               target: State.BACKLOG,
-              actions: [todoModel.assign({ status: Status.BACKLOG }), 'commit'],
+              actions: [taskModel.assign({ status: Status.BACKLOG }), 'commit'],
             },
             MOVE_TO_REVIEW: {
               target: State.REVIEW,
-              actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
+              actions: [taskModel.assign({ status: Status.REVIEW }), 'commit'],
             },
             DELETE: State.DELETED,
           },
@@ -68,13 +68,13 @@ export const createTodoMachine = ({
             MOVE_TO_IN_PROGRESS: {
               target: State.IN_PROGRESS,
               actions: [
-                todoModel.assign({ status: Status.IN_PROGRESS }),
+                taskModel.assign({ status: Status.IN_PROGRESS }),
                 'commit',
               ],
             },
             MOVE_TO_DONE: {
               target: State.DONE,
-              actions: [todoModel.assign({ status: Status.DONE }), 'commit'],
+              actions: [taskModel.assign({ status: Status.DONE }), 'commit'],
             },
             DELETE: State.DELETED,
           },
@@ -83,14 +83,14 @@ export const createTodoMachine = ({
           on: {
             MOVE_TO_REVIEW: {
               target: State.REVIEW,
-              actions: [todoModel.assign({ status: Status.REVIEW }), 'commit'],
+              actions: [taskModel.assign({ status: Status.REVIEW }), 'commit'],
             },
             DELETE: State.DELETED,
           },
         },
         [State.DELETED]: {
           entry: sendParent((context) => ({
-            type: 'TODO.DELETE',
+            type: 'TASK.DELETE',
             id: context.id,
           })),
         },
@@ -99,8 +99,8 @@ export const createTodoMachine = ({
     {
       actions: {
         commit: sendParent((context) => ({
-          type: 'TODO.COMMIT',
-          todo: context,
+          type: 'TASK.COMMIT',
+          task: context,
         })),
       },
     }

@@ -1,5 +1,5 @@
 <script lang="ts">
-  import { Actions } from '../models/todo';
+  import { Actions } from '../models/task';
 
   export let actor = null;
 

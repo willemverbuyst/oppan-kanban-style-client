@@ -3,8 +3,8 @@
 
   const dispatch = createEventDispatcher();
 
-  function addTodo(input) {
-    dispatch('addTodo', { text: input.value });
+  function addTask(input) {
+    dispatch('addTask', { text: input.value });
     input.value = '';
   }
 </script>
@@ -12,8 +12,8 @@
 <div class="input-field">
   <input
     class="task"
-    placeholder="Create a new todo"
-    on:keydown={(e) => e.key === 'Enter' && addTodo(e.target)}
+    placeholder="Add new task"
+    on:keydown={(e) => e.key === 'Enter' && addTask(e.target)}
   />
 </div>
 

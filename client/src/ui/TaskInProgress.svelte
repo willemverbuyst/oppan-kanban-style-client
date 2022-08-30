@@ -1,11 +1,9 @@
 <script lang="ts">
-  import { Actions } from '../models/todo';
+  import { Actions } from '../models/task';
 
   // import { flip } from 'svelte/animate';
   // import { createEventDispatcher } from 'svelte';
   // import { receive, send } from '../business/crossfade';
-  // import { Status } from '../models/status';
-  // import type { Todo } from '../store/todos.machine';
 
   export let actor = null;
 

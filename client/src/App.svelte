@@ -2,61 +2,61 @@
   import Header from './ui/Header.svelte';
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskBacklog from './ui/TaskBacklog.svelte';
-  import { todosMachine } from './business/store/todos.machine';
+  import { tasksMachine } from './business/store/tasks.machine';
   import { useMachine } from '@xstate/svelte';
-  import { Status } from './models/todo';
+  import { Status } from './models/task';
   import TaskDone from './ui/TaskDone.svelte';
   import TaskReview from './ui/TaskReview.svelte';
-  import NewTodoInput from './ui/NewTodoInput.svelte';
-  import type { Todo } from './business/store/todos.machine';
+  import NewTaskInput from './ui/NewTaskInput.svelte';
+  import type { Task } from './business/store/tasks.machine';
 
-  const { state, send } = useMachine(todosMachine, { devTools: true });
+  const { state, send } = useMachine(tasksMachine, { devTools: true });
 
-  $: ({ todos } = $state.context);
-  $: backlogTodos = filterOnStatus(todos, Status.BACKLOG);
-  $: inProgressTodos = filterOnStatus(todos, Status.IN_PROGRESS);
-  $: reviewTodos = filterOnStatus(todos, Status.REVIEW);
-  $: doneTodos = filterOnStatus(todos, Status.DONE);
+  $: ({ tasks } = $state.context);
+  $: backlogTasks = filterOnStatus(tasks, Status.BACKLOG);
+  $: inProgressTasks = filterOnStatus(tasks, Status.IN_PROGRESS);
+  $: reviewTasks = filterOnStatus(tasks, Status.REVIEW);
+  $: doneTasks = filterOnStatus(tasks, Status.DONE);
 
   function filterOnStatus(
-    todos: Todo[],
+    tasks: Task[],
     status: typeof Status[keyof typeof Status]
-  ): Todo[] {
-    return [...todos].filter((todo) => todo.status === status);
+  ): Task[] {
+    return [...tasks].filter((task) => task.status === status);
   }
 
   function add(event) {
-    send({ type: 'NEWTODO.COMMIT', value: event.detail.text });
+    send({ type: 'NEWTASK.COMMIT', value: event.detail.text });
   }
 </script>
 
 <Header />
-<NewTodoInput on:addTodo={add} />
+<NewTaskInput on:addTask={add} />
 <div class="board">
   <div class="backlog">
     <h2>backlog</h2>
-    {#each backlogTodos as backlogTodo (backlogTodo.id)}
+    {#each backlogTasks as backlogTodo (backlogTodo.id)}
       <TaskBacklog actor={backlogTodo.ref} />
     {/each}
   </div>
 
   <div class="in-progress">
     <h2>in progress</h2>
-    {#each inProgressTodos as inProgressTodo (inProgressTodo.id)}
+    {#each inProgressTasks as inProgressTodo (inProgressTodo.id)}
       <TaskInProgress actor={inProgressTodo.ref} />
     {/each}
   </div>
 
   <div class="review">
     <h2>review</h2>
-    {#each reviewTodos as reviewTodo (reviewTodo.id)}
+    {#each reviewTasks as reviewTodo (reviewTodo.id)}
       <TaskReview actor={reviewTodo.ref} />
     {/each}
   </div>
 
   <div class="done">
     <h2>done</h2>
-    {#each doneTodos as doneTodo (doneTodo.id)}
+    {#each doneTasks as doneTodo (doneTodo.id)}
       <TaskDone actor={doneTodo.ref} />
     {/each}
   </div>
