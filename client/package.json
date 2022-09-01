@@ -23,7 +23,7 @@
     "svelte-check": "^2.9.0",
     "svelte-preprocess": "^4.0.0",
     "tslib": "^2.0.0",
-    "typescript": "^3.9.3",
+    "typescript": "^4.8.2",
     "@xstate/svelte": "^2.0.0",
     "nanoid": "^4.0.0",
     "sirv-cli": "^2.0.2",
