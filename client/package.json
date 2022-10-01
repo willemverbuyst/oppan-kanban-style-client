@@ -17,7 +17,7 @@
     "@xstate/inspect": "^0.7.0",
     "@xstate/svelte": "^2.0.0",
     "nanoid": "^4.0.0",
-    "rollup": "^2.3.4",
+    "rollup": "^2.79.1",
     "rollup-plugin-css-only": "^3.1.0",
     "rollup-plugin-livereload": "^2.0.5",
     "rollup-plugin-svelte": "^7.1.0",
