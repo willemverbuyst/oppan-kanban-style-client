@@ -1,6 +1,6 @@
 version: 2
 updates:
-  - directory: /client
+  - directory: .
     package-ecosystem: 'npm'
     schedule:
       interval: 'monthly'
