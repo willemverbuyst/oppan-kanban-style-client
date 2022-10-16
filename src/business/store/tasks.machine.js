@@ -1,17 +1,10 @@
-import { spawn, ActorRef } from 'xstate';
+import { spawn } from 'xstate';
 import { nanoid } from 'nanoid';
 import { createTaskMachine } from './task.machine';
 import { createModel } from 'xstate/lib/model';
 import { Status } from '../../models/task';
 
-export interface Task {
-  id: string;
-  title: string;
-  status: typeof Status[keyof typeof Status];
-  ref: ActorRef<any>;
-}
-
-const createTask = (title: string) => {
+const createTask = (title) => {
   return {
     id: nanoid(),
     title,
@@ -22,13 +15,13 @@ const createTask = (title: string) => {
 const tasksModel = createModel(
   {
     task: '',
-    tasks: [] as Task[],
+    tasks: [],
   },
   {
     events: {
-      'NEWTASK.COMMIT': (value: string) => ({ value }),
-      'TASK.COMMIT': (task: Task) => ({ task }),
-      'TASK.DELETE': (id: string) => ({ id }),
+      'NEWTASK.COMMIT': (value) => ({ value }),
+      'TASK.COMMIT': (task) => ({ task }),
+      'TASK.DELETE': (id) => ({ id }),
     },
   }
 );

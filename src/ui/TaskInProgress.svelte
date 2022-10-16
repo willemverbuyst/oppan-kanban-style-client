@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import { Actions } from '../models/task';
 
   // import { flip } from 'svelte/animate';

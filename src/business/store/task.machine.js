@@ -19,15 +19,7 @@ const taskModel = createModel(
   }
 );
 
-export const createTaskMachine = ({
-  id,
-  title,
-  status,
-}: {
-  id: string;
-  title: string;
-  status: typeof Status[keyof typeof Status];
-}) => {
+export const createTaskMachine = ({ id, title, status }) => {
   return taskModel.createMachine(
     {
       id: 'task',

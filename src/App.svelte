@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
   import Header from './ui/Header.svelte';
   import TaskInProgress from './ui/TaskInProgress.svelte';
   import TaskBacklog from './ui/TaskBacklog.svelte';
@@ -8,7 +8,6 @@
   import TaskDone from './ui/TaskDone.svelte';
   import TaskReview from './ui/TaskReview.svelte';
   import NewTaskInput from './ui/NewTaskInput.svelte';
-  import type { Task } from './business/store/tasks.machine';
   import { dummyData } from './data/dummy-data';
 
   const persistedTasksMachine = tasksMachine.withConfig(
@@ -27,7 +26,7 @@
       task: '',
       tasks: (() => {
         try {
-          return (dummyData as Task[]) || [];
+          return dummyData || [];
         } catch (e) {
           console.error(e);
           return [];
@@ -44,10 +43,7 @@
   $: reviewTasks = filterOnStatus(tasks, Status.REVIEW);
   $: doneTasks = filterOnStatus(tasks, Status.DONE);
 
-  function filterOnStatus(
-    tasks: Task[],
-    status: typeof Status[keyof typeof Status]
-  ): Task[] {
+  function filterOnStatus(tasks, status) {
     return [...tasks].filter((task) => task.status === status);
   }
 

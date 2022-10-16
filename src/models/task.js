@@ -4,13 +4,13 @@ export const Actions = {
   MOVE_TO_REVIEW: 'MOVE_TO_REVIEW',
   MOVE_TO_DONE: 'MOVE_TO_DONE',
   DELETE: 'DELETE',
-} as const;
+};
 
 export const Status = {
   BACKLOG: 'BACKLOG',
   IN_PROGRESS: 'IN_PROGRESS',
   REVIEW: 'REVIEW',
   DONE: 'DONE',
-} as const;
+};
 
-export const State = { ...Status, DELETED: 'DELETED' } as const;
+export const State = { ...Status, DELETED: 'DELETED' };
