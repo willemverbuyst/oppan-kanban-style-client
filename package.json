@@ -7,7 +7,7 @@
     "preview": "vite preview"
   },
   "devDependencies": {
-    "@sveltejs/vite-plugin-svelte": "^1.1.0",
+    "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@xstate/inspect": "^0.7.0",
     "@xstate/svelte": "^2.0.0",
     "git-commit-msg-linter": "^4.5.0",
