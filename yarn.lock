@@ -31,7 +31,7 @@
   dependencies:
     fast-safe-stringify "^2.1.1"
 
-"@xstate/svelte@^2.0.0":
+"@xstate/svelte@^2.0.1":
   version "2.0.1"
   resolved "https://registry.yarnpkg.com/@xstate/svelte/-/svelte-2.0.1.tgz#17bf2831c903120db65ef5bf93ae7a037759e810"
   integrity sha512-A4QSCt4EpbyzbPIPGCRLoRn50VUq6gXcmJPIwgBaCTsTRsPsp8KSvltDqS2msBKEDr4FHWXEXOC4QVGDWFL5dg==
