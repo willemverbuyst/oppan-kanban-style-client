@@ -15,7 +15,7 @@
       actions: {
         persist: (ctx) => {
           try {
-            console.log('to be save to db');
+            console.log('to be saved to db');
           } catch (e) {
             console.error(e);
           }
