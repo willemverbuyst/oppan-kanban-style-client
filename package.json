@@ -10,7 +10,7 @@
     "@sveltejs/vite-plugin-svelte": "^1.4.0",
     "@xstate/inspect": "^0.7.0",
     "@xstate/svelte": "^2.0.1",
-    "git-commit-msg-linter": "^4.5.0",
+    "git-commit-msg-linter": "^4.7.4",
     "nanoid": "^4.0.0",
     "svelte": "^3.55.1",
     "vite": "^3.2.3",
